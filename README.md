@@ -10,16 +10,16 @@ gem 'spree_json_ld', github: 'hazg/spree_json_ld'
 
 Customize fields
 ================
-You can add custom fields to json ld by adding helpers/spree/json_ld_helper_decorator.rb
+You can add custom fields to json ld by adding app/helpers/spree/json_ld_helper_decorator.rb
 
 ``` ruby
 module Spree
 	module JsonLdHelper
-		def modify_json_ld(json)
+		def modify_json_ld(product, json)
 	
 			json.merge(
 				{
-					'description' => 'You custon description',
+					'description' => 'You custom description',
 					'brand' => {
   					'@type' => 'Thing',
   			 		'name' => "You brand"
