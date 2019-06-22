@@ -11,8 +11,8 @@ module Spree
 
 			#TODO: https support
 			#"http://#{@host.sub(%r[^http://],'')}/#{path.sub(%r[^/],'')}"
-			Addressable::URI.parse(@config.get(:url)) + path
-			#@config.get(:url) + path
+			#Addressable::URI.parse(@config.get(:url)) + path
+			@config.get(:url) + path
     end
 
 		def generate_json_ld(product)
