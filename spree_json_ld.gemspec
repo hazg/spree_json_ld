@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_json_ld'
-  s.version     = '1.3.3'
+  s.version     = '4.0.0'
   s.summary     = 'Add JSON LD support to Spree'
   s.description = 'Add JSON LD support to Spree'
   s.required_ruby_version = '>= 1.8.7'

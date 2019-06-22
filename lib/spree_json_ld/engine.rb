@@ -7,7 +7,7 @@ module SpreeJsonLd
     engine_name 'spree_json_ld'
 
     config.autoload_paths += %W(#{config.root}/lib)
-    
+
 
     initializer 'spree.json_ld.preferences.environment', before: 'spree.environment' do
       Spree::JsonLd::Config = Spree::JsonLdConfiguration.new
@@ -22,7 +22,10 @@ module SpreeJsonLd
     def self.activate
 
       if not Spree::JsonLd::Config.get(:url)
-        Spree::JsonLd::Config.set(:url, Spree::Config.get(:site_url))
+        Spree::JsonLd::Config.set(:url,
+          Spree::Store.current.url
+          #Spree::Config.get(:site_url)
+        )
       end
 
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
