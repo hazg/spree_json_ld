@@ -16,13 +16,17 @@ module Spree
     end
 
 		def generate_json_ld(product)
-
+			if image = (product.images.empty? ? false : product.images.first)
+				image = main_app.rails_representation_url(
+					image.attachment.variant(resize:'800x600'), only_path: true
+					)
+				image = json_ld_path_to_url(image)
+			end
 			json = {
 				'@context' => "http://schema.org/",
 				'@type' => "Product",
 				'name' => product.name,
-				'image' => (
-					product.images.empty? ? false : json_ld_path_to_url(main_app.url_for(product.images.first.url(:default)))),
+				'image' => image,
 				'description' => product.description,
 				'mpn' => product.sku,
 
