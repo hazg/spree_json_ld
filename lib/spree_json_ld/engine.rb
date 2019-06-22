@@ -22,10 +22,7 @@ module SpreeJsonLd
     def self.activate
 
       if not Spree::JsonLd::Config.get(:url)
-        Spree::JsonLd::Config.set(:url,
-          Spree::Store.current.url
-          #Spree::Config.get(:site_url)
-        )
+        Spree::JsonLd::Config.set(:url, Spree::Store.current.url)
       end
 
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
