@@ -1,3 +1,5 @@
+require "addressable/uri"
+
 module Spree
 	module JsonLdHelper
 
@@ -5,10 +7,12 @@ module Spree
 
 		def json_ld_path_to_url(path)
 			@config = Spree::JsonLd::Config
-			@host = @config.get(:url).sub(%r[^http://],'').sub(%r[/$], '')
+			#@host = @config.get(:url).sub(%r[^http://],'').sub(%r[/$], '')
 
 			#TODO: https support
-			"http://#{@host.sub(%r[^http://],'')}/#{path.sub(%r[^/],'')}"
+			#"http://#{@host.sub(%r[^http://],'')}/#{path.sub(%r[^/],'')}"
+			Addressable::URI.parse(@config.get(:url)) + path
+			#@config.get(:url) + path
     end
 
 		def generate_json_ld(product)
@@ -17,7 +21,8 @@ module Spree
 				'@context' => "http://schema.org/",
 				'@type' => "Product",
 				'name' => product.name,
-				'image' => (product.images.empty? ? false : json_ld_path_to_url(product.images.first.attachment.url(:product, false))),
+				'image' => (
+					product.images.empty? ? false : json_ld_path_to_url(main_app.url_for(product.images.first.url(:default)))),
 				'description' => product.description,
 				'mpn' => product.sku,
 
